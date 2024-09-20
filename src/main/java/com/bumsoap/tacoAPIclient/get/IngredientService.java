@@ -1,28 +1,28 @@
 package com.bumsoap.tacoAPIclient.get;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 import tacos.Ingredient;
 
-import java.net.URI;
-import java.util.HashMap;
-import java.util.Map;
+import java.time.Instant;
+import java.time.ZoneId;
 
 @Component
 @AllArgsConstructor
+@Slf4j
 public class IngredientService {
     private RestTemplate rest;
 
     public Ingredient getIngredientById(Long ingredientId) {
-        Map<String, Long> urlVariables = new HashMap<>();
-        urlVariables.put("id", ingredientId);
-
-        URI uri = UriComponentsBuilder
-                .fromHttpUrl("http://localhost:8080/data-api/ingredients/{id}")
-                .build(urlVariables);
-
-        return rest.getForObject(uri, Ingredient.class);
+        ResponseEntity<Ingredient> responseEntity =
+                rest.getForEntity("http://localhost:8080/data-api/ingredients/{id}",
+                        Ingredient.class, ingredientId);
+        var date = responseEntity.getHeaders().getDate();
+        var ldt = Instant.ofEpochMilli(date).atZone(ZoneId.systemDefault()).toLocalDateTime();
+        log.info("자료 읽은 시각: {}", ldt);
+        return responseEntity.getBody();
     }
 }
