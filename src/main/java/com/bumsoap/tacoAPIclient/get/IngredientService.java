@@ -16,6 +16,11 @@ import java.time.ZoneId;
 public class IngredientService {
     private RestTemplate rest;
 
+    public void updateIngredient(Ingredient ingredient, Long id) {
+        rest.put("http://localhost:8080/data-api/ingredients/{id}",
+                ingredient, id);
+    }
+
     public Ingredient getIngredientById(Long ingredientId) {
         ResponseEntity<Ingredient> responseEntity =
                 rest.getForEntity("http://localhost:8080/data-api/ingredients/{id}",
