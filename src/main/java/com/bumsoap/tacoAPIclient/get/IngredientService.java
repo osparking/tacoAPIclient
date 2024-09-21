@@ -16,6 +16,11 @@ import java.time.ZoneId;
 public class IngredientService {
     private RestTemplate rest;
 
+    @SuppressWarnings("unused")
+    public void deleteIngredient(Long id) {
+        rest.delete("http://localhost:8080/data-api/ingredients/{id}", id);
+    }
+
     public void updateIngredient(Ingredient ingredient, Long id) {
         rest.put("http://localhost:8080/data-api/ingredients/{id}",
                 ingredient, id);
