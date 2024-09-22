@@ -26,6 +26,12 @@ public class IngredientService {
                 ingredient, id);
     }
 
+    public Ingredient createIngredient(Ingredient ingredient) {
+        return rest.postForObject(
+                "http://localhost:8080/data-api/ingredients",
+                ingredient, Ingredient.class);
+    }
+
     public Ingredient getIngredientById(Long ingredientId) {
         ResponseEntity<Ingredient> responseEntity =
                 rest.getForEntity("http://localhost:8080/data-api/ingredients/{id}",
