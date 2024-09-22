@@ -54,8 +54,7 @@ class IngredientServiceTest {
         String ingCode = "PMKN";
         Ingredient ingredient = new Ingredient(ingCode, ingName,
                 (short)Ingredient.Type.VEGGIES.ordinal());
-        var loc = ingredientService.createIngredient(ingredient);
-        log.info("장소: " + loc.toString());
+        var createdIngred = ingredientService.createIngredient(ingredient);
         var ingInDB = ingredientService.getIngredientByCode(ingCode);
         assertEquals(ingInDB.getName(), ingName);
         ingredientService.deleteIngredient(ingInDB.getId());
