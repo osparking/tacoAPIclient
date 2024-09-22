@@ -41,4 +41,12 @@ public class IngredientService {
         log.info("자료 읽은 시각: {}", ldt);
         return responseEntity.getBody();
     }
+
+    public Ingredient getIngredientByCode(String code) {
+        ResponseEntity<Ingredient> responseEntity =
+                rest.getForEntity("http://localhost:8080/ingredient?code={code}",
+                        Ingredient.class, code);
+        var ingredient = responseEntity.getBody();
+        return ingredient;
+    }
 }
