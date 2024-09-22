@@ -1,12 +1,11 @@
 package com.bumsoap.tacoAPIclient.get;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.servlet.ServletException;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.web.client.RestClientException;
 import tacos.Ingredient;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -39,4 +38,13 @@ class IngredientServiceTest {
         assertEquals(ingredient.getCode(), "FLTO");
     }
 
+    @Test
+    public void testIngredientDelete() {
+        final long id = 5L;
+        ingredientService.deleteIngredient(id);
+        assertThrows(RestClientException.class,
+                () -> ingredientService.getIngredientById(id),
+                "RestClientException 이 발생하지 않음");
+    }
+    
 }
