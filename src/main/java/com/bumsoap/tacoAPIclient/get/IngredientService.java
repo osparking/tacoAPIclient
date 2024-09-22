@@ -26,10 +26,9 @@ public class IngredientService {
                 ingredient, id);
     }
 
-    public Ingredient createIngredient(Ingredient ingredient) {
-        return rest.postForObject(
-                "http://localhost:8080/data-api/ingredients",
-                ingredient, Ingredient.class);
+    public java.net.URI createIngredient(Ingredient ingredient) {
+        return rest.postForLocation("http://localhost:8080/data-api/ingredients",
+                ingredient);
     }
 
     public Ingredient getIngredientById(Long ingredientId) {

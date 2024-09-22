@@ -1,5 +1,6 @@
 package com.bumsoap.tacoAPIclient.get;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
+@Slf4j
 class IngredientServiceTest {
 
     private IngredientService ingredientService;
@@ -52,7 +54,8 @@ class IngredientServiceTest {
         String ingCode = "PMKN";
         Ingredient ingredient = new Ingredient(ingCode, ingName,
                 (short)Ingredient.Type.VEGGIES.ordinal());
-        ingredientService.createIngredient(ingredient);
+        var loc = ingredientService.createIngredient(ingredient);
+        log.info("장소: " + loc.toString());
         var ingInDB = ingredientService.getIngredientByCode(ingCode);
         assertEquals(ingInDB.getName(), ingName);
         ingredientService.deleteIngredient(ingInDB.getId());
