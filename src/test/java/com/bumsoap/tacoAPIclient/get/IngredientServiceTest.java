@@ -1,14 +1,13 @@
 package com.bumsoap.tacoAPIclient.get;
 
-import jakarta.servlet.ServletException;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.web.client.RestClientException;
 import tacos.Ingredient;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 class IngredientServiceTest {
@@ -46,5 +45,15 @@ class IngredientServiceTest {
                 () -> ingredientService.getIngredientById(id),
                 "RestClientException 이 발생하지 않음");
     }
-    
+
+    @Test
+    void createIngredient() {
+        String ingName = "미니 단호박";
+        String ingCode = "PMKN";
+        Ingredient ingredient = new Ingredient(ingCode, ingName,
+                (short)Ingredient.Type.VEGGIES.ordinal());
+        ingredientService.createIngredient(ingredient);
+        var ingInDB = ingredientService.getIngredientByCode(ingCode);
+        assertEquals(ingInDB.getName(), ingName);
+    }
 }
