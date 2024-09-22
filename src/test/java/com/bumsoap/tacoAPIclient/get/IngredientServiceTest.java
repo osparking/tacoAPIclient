@@ -55,5 +55,6 @@ class IngredientServiceTest {
         ingredientService.createIngredient(ingredient);
         var ingInDB = ingredientService.getIngredientByCode(ingCode);
         assertEquals(ingInDB.getName(), ingName);
+        ingredientService.deleteIngredient(ingInDB.getId());
     }
 }
